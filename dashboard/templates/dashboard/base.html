@@ -1,0 +1,141 @@
+{% load staticfiles %}
+
+
+<html lang="en" class="no-js">
+<head>
+    <!-- start: JavaScript-->
+
+    <!--[if !IE]>-->
+
+    <script type="text/javascript" src="{% static "js/jquery-2.0.3.min.js" %}"></script>
+
+    <!--<![endif]-->
+
+    <!--[if IE]>
+
+        <script src="assets/js/jquery-1.10.2.min.js"></script>
+
+    <![endif]-->
+
+    <!--[if !IE]>-->
+
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+            </script>
+
+    <!--<![endif]-->
+
+    <!--[if IE]>
+
+        <script type="text/javascript">
+         window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+        </script>
+
+    <![endif]-->
+
+<script type="text/javascript" src="{% static "js/jquery-migrate-1.2.1.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery-ui-1.10.3.custom.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.sparkline.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.flot.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.flot.pie.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.flot.stack.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.flot.resize.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.flot.time.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.flot.axislabels.js" %}"></script>
+<script type="text/javascript" src="{% static "js/retina.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/raphael.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/justgage.1.0.1.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/custom.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/core.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/pages/index.js" %}"></script>
+<script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.chosen.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.cleditor.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.autosize.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.placeholder.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.maskedinput.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.inputlimiter.1.3.1.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/bootstrap-datepicker.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/bootstrap-timepicker.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/moment.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/daterangepicker.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.hotkeys.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/bootstrap-wysiwyg.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/bootstrap-colorpicker.min.js" %}"></script>
+<!-- date.js + static/timezone directory : support for timezone conversions. Not useful for the moment -->
+<!--script type="text/javascript" src="{% static "js/date.js" %}"></script-->
+<script type="text/javascript">//timezoneJS.timezone.zoneFileBasePath = "{% static "timezone" %}";</script>
+
+<script src="{% static "js/pages/form-elements.js" %}"></script>
+
+
+   <!-- end: JavaScript-->
+
+
+    <!-- start: Meta -->
+    <meta charset="utf-8">
+    <title>Djoro Dashboard</title>
+    <meta name="description" content="Djoro dashboard.">
+    <meta name="author" content="Enersy">
+    <meta name="keyword" content="Djoro Dahsboard">
+    <!-- end: Meta -->
+
+    <!-- start: Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- end: Mobile Specific -->
+
+    <!-- start: CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+	<link href="{% static "css/style.min.css" %}" rel="stylesheet">
+	<link href="{% static "css/retina.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/html5-boilerplate/normalize.css" %} rel="stylesheet" >
+    <link href="{% static "css/html5-boilerplate/main.css" %} rel="stylesheet">
+    <link href="{% static "css/djoroDashboard.css" %}" rel="stylesheet">
+    
+    <!-- end: CSS -->
+
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="assets/js/respond.min.js"></script>
+        <link href="assets/css/ie.css" rel="stylesheet">
+    <![endif]-->
+
+    <!--[if IE 9]>
+        <link id="ie9style" href="assets/css/ie9.css" rel="stylesheet">
+    <![endif]-->
+
+    <!-- start: Favicon and Touch Icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static "ico/apple-touch-icon-144-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static "ico/apple-touch-icon-114-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{%  static "ico/apple-touch-icon-72-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" href="{%  static "ico/apple-touch-icon-57-precomposed.png" %}">
+    <link rel="shortcut icon" href="{% static "ico/favicon.png" %}">
+    <!-- end: Favicon and Touch Icons -->
+
+    {% block head1 %}{% endblock %}
+    
+
+</head>
+
+<body>
+
+    {% block level1 %}{% endblock %}
+
+    <div class="clearfix"></div>
+
+    <footer>
+        <div class="container">
+                <span style="text-align:left;float:left">&copy; 2015 <a href="http://enersy.fr" alt="Enersy" title="Enersy">Enersy</a></span>
+                <span class="hidden-phone" style="text-align:right;float:right">Djoro Dashboard <a href="http://admintemplates.co" alt="Bootstrap Admin Template" title="Bootstrap Admin Template">v1.0</a></span>
+        </div>
+    </footer>
+
+</body>
+
+<!-- Colors of gauges -->
+<script type="text/javascript" src="{% static "js/djoro-colors.js" %}"></script>
+
+</html>
+
+

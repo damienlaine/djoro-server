@@ -1,0 +1,283 @@
+{% extends "dashboard/baseNavbar.html" %}
+{% block level2 %}
+	<div class="row">
+      <div class="col-lg-12">
+          <div class="box">
+              <div class="box-header" data-original-title>
+                  <h2><i class="icon-user"></i><span class="break"></span>{{owner.first_name}} {{owner.last_name}} ({{thermostat.name}})</h2>
+                        &nbsp;
+                        {% if minutes_since_last_connection < 20 %}
+                            <span class="label label-success">Connecté</span>
+                        {% elif minutes_since_last_connection < 10080 %}
+                            <span class="label label-info">Déconnecté</span>
+                        {% else %}
+                            <span class="label label-default">Hors ligne</span>
+                        {% endif %}
+                  <div class="box-icon">
+                      <a href="table.html#" class="btn-setting"><i class="icon-wrench"></i></a>
+                      <a href="table.html#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
+                      <a href="table.html#" class="btn-close"><i class="icon-remove"></i></a>
+                  </div>
+              </div>
+              <div class="box-content">
+
+              <div class="tempStats row">
+                  	<div class="col-md-2 col-sm-4">
+					<div class="tempStatBox">
+						<div class="tempStat" data-color="{{measured_temp_color}}">{{measured_temp}}</div>
+						<span>Température intérieure</span>
+					</div>
+				</div><!--/col-->
+                  	<div class="col-md-2 col-sm-4">
+					<div class="tempStatBox">
+						<div class="tempStat" data-color="green">{{userRequestedTemperature}}</div>
+						<span>Température demandée</span>
+					</div>
+				</div><!--/col-->
+                  	<div class="col-md-2 col-sm-4">
+					<div class="tempStatBox">
+						<div class="tempStat" data-color="{{boilerOnColor}}">{{boilerOn}}</div>
+						<span>Relais on/off</span>
+					</div>
+				</div><!--/col-->
+              </div>
+
+
+              <div class="tempStats row">
+                    <div class="box-header">
+                        <h2><i class="glyphicon glyphicon-check"></i><span class="break"></span>Diagnostic sur la période</h2>
+                    </div>                  	
+                    <div class="col-md-2 col-sm-4">
+					<div class="tempStatBox">
+						<div class="tempStat" data-color="green">{{percent_boiler_on}} %</div>
+						<span>Temps de chauffe</span>
+					</div>
+				</div><!--/col-->
+                  	<div class="col-md-2 col-sm-4">
+					<div class="tempStatBox">
+						<div class="tempStat" data-color="{{confort_color}}">{{percentage_confort}}</div>
+						<span>Consigne atteinte</span>
+					</div>
+				</div><!--/col-->
+                  	<div class="col-md-2 col-sm-4">
+					<div class="tempStatBox">
+						<div class="tempStat" data-color="{{heating_speed_all_color}}">{{heating_speed_at_all_temperatures}}</div>
+						<span>Vitesse de chauffe moyenne (°C/h)</span>
+					</div>
+				</div><!--/col-->
+                  	<div class="col-md-2 col-sm-4">
+					<div class="tempStatBox">
+						<div class="tempStat" data-color="{{heating_speed_7_color}}">{{heating_speed_at_7_degrees}}</div>
+						<span>Vitesse de chauffe estimée à 7°C (°C/h)</span>
+					</div>
+				</div><!--/col-->
+                  	<div class="col-md-2 col-sm-4">
+					<div class="tempStatBox">
+						<div class="tempStat" data-color="{{heating_speed_0_color}}">{{heating_speed_at_0_degrees}}</div>
+						<span>Vitesse de chauffe estimée à 0°C (°C/h)</span>
+					</div>
+				</div><!--/col-->
+                  	<div class="col-md-2 col-sm-4">
+					<div class="tempStatBox">
+						<div class="tempStat" data-color="">{{confiance_p_value}}</div>
+						<span>Indice de confiance de l'estimation</span>
+					</div>
+				</div><!--/col-->
+              </div>
+                <center>
+                    <a href="/dashboard/thermostats/{{thermostat.uid}}/startdate/{{period_before_timestamp}}">&lt;&lt; Période précédente</a>&nbsp;|&nbsp;
+                    <a href="/dashboard/thermostats/{{thermostat.uid}}/startdate/{{period_after_timestamp}}">Période suivante &gt;&gt;</a>
+                </center>
+
+              </div>
+
+            <style>
+                    html, body, #chart1, #chart_heating_speed {
+                        margin: 0px;
+                        padding: 0px;
+                        height: 350px;
+                        width: 100%;
+                    }
+            </style>
+
+            <div class="box-header">
+                <h2><i class="glyphicon glyphicon-search"></i><span class="break"></span>Graphique de température</h2>
+            </div> 
+            <div class="box-content">
+                    <div id="chart1" >
+                    </div>
+            </div>
+
+		  <div class="box-content">	
+                Zoom : 
+                    {% for day in array_days %}
+                        <button id="zoom_{{day.index}}">
+                            <script>
+                                var a=new Date({{day.start}});
+                                document.write(a.getDate() + "/" + (a.getMonth()+1));
+                            </script>
+                        </button>
+        			{% endfor %}
+                   <button id="zoom_all">En entier</button>
+            </div>
+
+            <div class="box-header">
+                <h2><i class="glyphicon glyphicon-th"></i><span class="break"></span>Vitesse de chauffe</h2>
+            </div> 
+		  <div class="box-content">
+                <center><h2>Vitesse de chauffe</h2></center>
+                <div id="chart_heating_speed" >
+                </div>
+                <center>Température extérieure (°C)</center>
+            </div>
+          </div>
+      </div><!--/col-->
+
+  </div><!--/row-->
+
+<script type="text/javascript">
+	var data = [   
+                    {
+                        label: 'Température intérieure (marche)',
+                        data: {{ boiler_on_array }},
+                        color: '#f08080',
+                        lines: { show: false },
+                        //points: { show: true },
+                        bars: {
+                            show: true,
+                            barWidth: 5*60*1000
+                        }
+                    },
+                    {
+                        label: 'Température intérieure (arrêt)',
+                        data: {{ boiler_off_array }},
+                        color: '#9999ff',
+                        lines: { show: false },
+                        //points: { show: true },
+                        bars: {
+                            show: true,
+                            barWidth: 5*60*1000
+                        }
+                    },
+                    {
+                        label: 'Température intérieure',
+                        data: {{ current_temp_array }},
+                        color: '#a0a0a0',
+                        lines: { lineWidth: 1 }
+                    },	
+                    {
+                        label: 'Température programmée',
+                        data: {{ user_requested_temp_array }},
+                        color: '#000000',
+                        lines: { lineWidth: 1 }
+                    },
+                    {
+                        label: 'Température extérieure',
+                        data: {{ ext_temp_array }},
+        		  	    color: '#60a060',
+                        lines: { lineWidth: 0.5 }
+                    }
+                ];
+
+    // Support for timezone : to be used with date.js. Not useful for the moment
+    //timezoneJS.timezone.defaultZoneFile = [];
+    //timezoneJS.timezone.init({async: false});
+
+    var options = {
+        xaxis: {
+            mode: "time",
+            timeformat: "%d/%m",
+            timezone: "browser"
+        },
+        yaxes: [{
+            position: 'left',
+            axisLabel: '°C',
+        }],
+        legend: {
+            position: "sw"
+        },
+        grid: {
+            borderWidth: {top: 1, right: 1, bottom: 1, left: 1},
+            borderColor: {top: "#aaa", left: "#aaa"},
+            backgroundColor: "#fafafa"
+        }
+    };
+
+
+    $("#zoom_all").click(function () {
+            console.log({{day.start}});
+                options.xaxis.min = null;
+                options.xaxis.max = null;
+                options.xaxis.timeformat = "%d/%m";
+                $.plot("#chart1", data, options);
+    });
+
+    var plot = $.plot("#chart1", data, options);
+
+    // Zoom buttons action
+    {% for day in array_days %}
+        $("#zoom_{{day.index}}").click(function () {
+                options.xaxis.min = new Date({{day.start}}).getTime();
+                options.xaxis.max = new Date({{day.end}}).getTime();
+                options.xaxis.timeformat = "%d/%m %H:%M";
+                $.plot("#chart1", data, options);
+        });
+    {% endfor %}
+</script> 
+
+<script type="text/javascript">
+    // Heating speed chart
+    var data_heating_speed = [   
+                    {
+                        label: 'Maximum recommandé pour chaudière à condensation',
+                        data: [[ -7, 0.5, -0.2 ] , [ 15, 0.5, -0.2]],
+                        color: '#a0f0a0',
+                        lines: { show: true, fill: true, fillcolor: '#80F080' },
+                    },
+                    {
+                        label: 'Minimum requis',
+                        data: [[ -7, 0.2, -0.2 ] , [ 15, 0.2, -0.2]],
+                        color: '#f06060',
+                        lines: { show: true, fill: true },
+                    },
+                    {
+                        label: 'Vitesse de chauffe (°C par heure)',
+                        data: {{ heating_speed_values }},
+                        color: '#303030',
+                        lines: { show: true },
+                        points: { show: true },
+                    }
+                ];
+
+    var options_heating_speed = {
+        axisLabels: {
+            show: true
+        },
+        /*xaxes: [{
+            axisLabel: 'Température extérieure (°C)',
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+            axisLabelPadding: 5
+
+        }],*/
+        yaxes: [{
+            position: 'left',
+            axisLabel: '°C/h',
+        }],
+        legend: {
+            position: "sw"
+        },
+        grid: {
+            borderWidth: {top: 1, right: 1, bottom: 1, left: 1},
+            borderColor: {top: "#aaa", left: "#aaa"},
+            backgroundColor: "#fffafa"
+        }
+    };
+
+    var plot_heating_speed = $.plot("#chart_heating_speed", data_heating_speed, options_heating_speed);
+
+</script> 
+
+
+{% endblock %}

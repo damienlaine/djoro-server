@@ -1,0 +1,45 @@
+{% extends "dashboard/base.html" %}
+{% block level1 %}
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".sidebar-nav.nav-collapse">
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html"><span>Djoro dashboard - {{ username }}</span></a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- start: Main Menu -->
+
+    <div class="container">
+        <div class="row">
+
+            <div id="sidebar-left" class="col-sm-1">
+                <div class="nav-collapse sidebar-nav collapse navbar-collapse bs-navbar-collapse">
+                    <ul class="nav nav-tabs nav-stacked main-menu">
+                        <li><a href="/dashboard/users"><i class="icon-dashboard"></i><span class="hidden-sm">Diagnostic</span></a></li>
+                        <li><a href="/dashboard/maintenances"><i class="icon-edit"></i><span class="hidden-sm">Entretiens</span></a></li>
+                        <li><a href="/dashboard"><i class="icon-group"></i><span class="hidden-sm">Réglages</span></a></li>
+                        <li><a href="/dashboard/logout"><i class="icon-off"></i><span class="hidden-sm">Déconnexion</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <a id="main-menu-toggle" class="hidden-xs open"><i class="icon-reorder"></i></a>
+            <!-- end: Main Menu -->
+
+
+            <!-- start: Content -->
+            <div id="content" class="col-sm-11">
+
+				{% block level2 %}{% endblock %}
+
+                <hr>
+            </div>
+        </div>
+    </div><!--/container-->
+{% endblock %}

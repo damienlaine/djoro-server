@@ -1,0 +1,15 @@
+{% block title %}{{ section.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+<ul>
+{% for t in thermostats %}
+<li>
+  <a href=" thermostats/{{t.uid}} ">
+    {{t.name}} 
+  </a>
+</li>
+{% endfor %}
+</ul>
+{% endblock %}

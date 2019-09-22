@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+<script src="//jquery-ui.googlecode.com/svn/tags/1.8.20/ui/i18n/jquery.ui.datepicker-fr.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['annotationchart']}]}">
+</script>
+
+<script>
+  $(function() {
+    $.datepicker.setDefaults( $.datepicker.regional[ "fr" ] );
+    $.datepicker.setDefaults({
+      dateFormat: 'yy-mm-dd',
+    });
+    $( "#id_date" ).datepicker();
+  });
+</script>
+
+Choisir la date de début du graphique (Nombre de jours maximum: {{number_of_days_in_graph}})
+<form action="/monitor/thermostats/{{uid}}" method="post">
+    {% csrf_token %}
+    {{ dateForm }}
+    <input type="submit" value="OK">
+</form>
+
+<script type='text/javascript'>
+  google.load('visualization', '1', {'packages':['annotationchart']});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('datetime', 'Date');
+    data.addColumn('number', 'T° Intérieure');
+    data.addColumn('number', 'T° Consigne');
+    data.addColumn('number', 'T° Extérieure');
+    data.addColumn('number', 'Boiler On');
+    data.addColumn('number', 'T° utilisateur')
+    var values = {{ values }};
+    var arrayLength = values.length;
+    for (var i = 0; i < arrayLength; i++) {
+        values[i][0] = new Date(values[i][0]);
+    }
+    data.addRows(values);
+
+    var chart = new google.visualization.AnnotationChart(document.getElementById('chart_div'));
+
+    var options = {
+      displayAnnotations: true
+    };
+
+    chart.draw(data, options);
+  }
+</script>
+
+<div id='chart_div' style='width: 900px; height: 500px;'></div>

@@ -1,0 +1,78 @@
+{% extends "dashboard/base.html" %}
+{% load staticfiles %}
+
+{% block head1 %}
+<style type="text/css">body { background: url("{% static "img/bg-login.jpg" %}") !important; }
+		</style>
+{% endblock %}
+
+{% block level1 %}
+<div class="container">
+		<div class="row">
+
+					
+			<div class="row">
+				<div class="login-box">
+					<div class="icons">
+<!--						<a href="index.html"><i class="halflings-icon home"></i></a>
+						<a href="login.html#"><i class="halflings-icon cog"></i></a>-->
+					</div>
+					<h2>Merci de vous identifier</h2>
+					<form class="form-horizontal" action="" method="post">
+                            {% csrf_token %}
+						<fieldset>
+                        {% if invalid_login_error or disabled_account_error %}
+                            <div class="box-content alerts">                            
+                                <div class="alert alert-danger">Nom d'utilisateur ou mot de passe incorrect</div></p>
+                            </div>
+                        {% endif %}
+
+							<div class="input-wrap">
+							<div class="input-prepend input-group" title="Username">
+								<span class="input-group-addon"><i class="halflings-icon user"></i></span>
+								<input class="form-control" name="username" id="username" type="text" placeholder="nom d'utilisateur"/>
+							</div>
+							</div>
+							<div class="input-wrap">
+							<div class="input-prepend input-group" title="Password">
+								<span class="input-group-addon"><i class="halflings-icon lock"></i></span>
+								<input class="form-control" name="password" id="password" type="password" placeholder="mot de passe"/>
+							</div>
+							</div>
+							<label class="remember" for="remember"><input type="checkbox" id="remember" />Se souvenir de moi</label>
+
+							<div class="button-login">	
+								<button type="submit" class="btn btn-primary">Valider</button>
+							</div>
+							<div class="clearfix"></div>
+					</form>
+					<hr>
+					<h3>Mot de passe oublié ?</h3>
+					<p>
+						Pour en obtenir un nouveau, <a href="#">cliquer ici</a>.
+					</p>	
+				</div><!--/col-->
+			</div><!--/row-->
+			
+				</div><!--/row-->
+		
+		<div class="modal fade" id="myModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Modal title</h4>
+					</div>
+					<div class="modal-body">
+						<p>Here settings can be configured...</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+	</div><!--/container-->
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "dashboard/baseNavbar.html" %}
+{% block level2 %}
+<div class="col-lg-12">
+    <div class="box">
+        <div class="box-header">
+            <h2><i class="icon-hand-up"></i><span class="break"></span>Nouvelle Campagne</h2>
+        </div>
+        <div class="box-content">
+
+
+            <div class="col-sm-3">
+                <a class="quick-button" ng-click='showNewPromo()'>
+                    <i class="icon-shopping-cart"></i>
+                    <p>Nouvelle offre promotionnelle</p>
+                </a>
+            </div>
+            <div class="col-sm-3">
+                <a class="quick-button">
+                    <i class="icon-calendar"></i>
+                    <p>Planification des entretiens</p>
+                </a>
+            </div>
+            <div class="col-sm-3">
+                <a class="quick-button">
+                    <i class="icon-money"></i>
+                    <p>Sensibilisation à économiser</p>
+                </a>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="box" ng-show="showNewPromoForm">
+        <div class="box-header">
+            <h2><i class="icon-hand-up"></i><span class="break"></span>Nouvelle offre promotionnelle</h2>
+        </div>
+        <div class="box-content">
+
+            <form class="form-horizontal">
+                  <fieldset class="col-sm-12">
+                    <div class="form-group">
+                      <label class="control-label" for="title">Titre</label>
+                      <div class="controls row">
+                        <div class="input-group col-sm-4">
+                            <input type="text" class="form-control" ng-model="promo.title"/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label" for="content">Contenu</label>
+                      <div class="controls row">
+                        <div class="input-group col-sm-4">
+                            <textarea id="content" rows="6" style="width:100%" ng-model="promo.content"></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label" for="content">Montant à économiser (€)</label>
+                      <div class="controls row">
+                        <div class="input-group col-sm-4">
+                            <input type="text" class="form-control" ng-model="promo.amount"/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-actions">
+                      <button type="submit" class="btn btn-primary" ng-click="validateNewPromo(promo)">Lancer</button>
+                      <button type="reset" class="btn" ng-click="cancelNewPromo()">Annuler</button>
+                    </div>
+                  </fieldset>
+              </form>   ``
+
+        </div>
+</div><!--/col-->
+{% endblock %}
