@@ -1,5 +1,5 @@
 Django==1.7.1
-djangorestframework==3.9.1
+djangorestframework==3.11.2
 django-cors-headers==1.0.0
 pytz==2014.10
 django-extensions==1.4.9
